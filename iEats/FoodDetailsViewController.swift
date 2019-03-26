@@ -11,8 +11,42 @@ import PassKit
 
 class FoodDetailsViewController: UIViewController {
     
+    @IBOutlet weak var foodImageView: UIImageView!
+    @IBOutlet weak var foodNameLabel: UILabel!
+    @IBOutlet weak var foodPriceLabel: UILabel!
+    @IBOutlet weak var foodDescriptionLabel: UILabel!
+    
+    var selectedFood: FoodModel?
+    
     override func viewDidLoad() {
+        setupForFood()
         addApplePayButton()
+        
+        self.navigationItem.title = selectedFood?.name
+    }
+    
+    func setupForFood(){
+        
+        foodNameLabel.text = selectedFood?.name
+        foodPriceLabel.text = String(format: "R$ %.2f", selectedFood?.price ?? 10000.00)
+        foodDescriptionLabel.text = selectedFood?.detailedDescription
+        
+        var imageToSetup = UIImage(named: "logo")
+        switch selectedFood?.imageID {
+        case 1:
+            imageToSetup = UIImage(named: "burger")
+        case 2:
+            imageToSetup = UIImage(named: "fries")
+        case 3:
+            imageToSetup = UIImage(named: "pizza")
+        case 4:
+            imageToSetup = UIImage(named: "pasta")
+        case 5:
+            imageToSetup = UIImage(named: "cake")
+        default:
+            print("Image Not Really Handled")
+        }
+        foodImageView.image = imageToSetup
     }
     
     func addApplePayButton(){
