@@ -17,6 +17,14 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
     @IBOutlet weak var foodDescriptionLabel: UILabel!
     
     var selectedFood: FoodModel?
+    let request = PKPaymentRequest()
+    var summaryItens = [PKPaymentSummaryItem]()
+    var shippingMethodss = [PKShippingMethod]()
+    var shippingPrice: NSDecimalNumber?{
+        didSet{
+            updateSummary()
+        }
+    }
     
     override func viewDidLoad() {
         setupForFood()
@@ -57,10 +65,10 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
         view.addConstraint(NSLayoutConstraint(item: applePayButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: applePayButton, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: applePayButton, attribute: .width, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .width, multiplier: 0.8, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: applePayButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40))
     }
     
     @objc private func applePayButtonTapped(sender: UIButton){
-        let request = PKPaymentRequest()
         let SupportedPaymentNetworks = [PKPaymentNetwork.masterCard, PKPaymentNetwork.visa, PKPaymentNetwork.amex]
         request.merchantIdentifier = "merchant.com.shiningdevelopers"
         request.supportedNetworks = SupportedPaymentNetworks
@@ -77,13 +85,10 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
         inStore.identifier = "inStoreShipping"
         inStore.detail = "You'll come visit us!"
         
-        request.shippingMethods = [delivery, inStore]
+        shippingMethodss = [delivery, inStore]
+        request.shippingMethods = shippingMethodss
+        shippingPrice = request.shippingMethods?.first?.amount
         
-        let foodItem = PKPaymentSummaryItem(label: selectedFood!.name, amount: NSDecimalNumber(floatLiteral: Double(selectedFood!.price)))
-        let shipingItem = PKPaymentSummaryItem(label: "shipping", amount: NSDecimalNumber(floatLiteral: 5.00))
-        let total = PKPaymentSummaryItem(label: "iEats", amount: foodItem.amount.adding(shipingItem.amount))
-        
-        request.paymentSummaryItems = [ foodItem, shipingItem, total]
         let applePayController = PKPaymentAuthorizationViewController(paymentRequest: request)
         if let viewController = applePayController {
             viewController.delegate = self
@@ -91,13 +96,44 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
         }
     }
     
+    func updateSummary() {
+        request.paymentSummaryItems = [PKPaymentSummaryItem]()
+        
+        let foodItem = PKPaymentSummaryItem(label: selectedFood!.name, amount: NSDecimalNumber(floatLiteral: Double(selectedFood!.price)))
+        let shippingItem = PKPaymentSummaryItem(label: "shipping", amount: shippingPrice ?? 0)
+        let total = PKPaymentSummaryItem(label: "iEats", amount: foodItem.amount.adding(shippingItem.amount))
+        
+        request.paymentSummaryItems = [foodItem, shippingItem, total]
+        summaryItens = [foodItem, shippingItem, total]
+    }
+    
     // MARK - PKPaymentAuthorizationViewControllerDelegate
     
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
         //Perform Segue
+        controller.dismiss(animated: true, completion: nil)
     }
     
     func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didSelect shippingMethod: PKShippingMethod, handler completion: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void) {
-        <#code#>
+        //The shipping method was changed, handle it here
+        shippingPrice = shippingMethod.amount
+        let update = PKPaymentRequestShippingMethodUpdate(paymentSummaryItems: summaryItens)
+        completion(update)
+    }
+    
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didSelectShippingContact contact: PKContact, handler completion: @escaping (PKPaymentRequestShippingContactUpdate) -> Void) {
+        let zip = contact.postalAddress?.postalCode
+        let zipError = PKPaymentRequestShippingContactUpdate.init()
+        if(zip?.first != "9"){
+            print("Error")
+            zipError.status = .failure
+            zipError.errors.append(PKPaymentRequest.paymentShippingAddressInvalidError(withKey: "donotdeliver", localizedDescription: "Sorry, we do not deliver that far :("))
+        }
+        completion(zipError)
+    }
+    
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        
+        completion(PKPaymentAuthorizationResult.init(status: .success, errors: nil))
     }
 }
