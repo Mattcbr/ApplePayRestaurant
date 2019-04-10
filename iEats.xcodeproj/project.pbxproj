@@ -14,6 +14,7 @@
 		2F84620122440FCE0007C70C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F84620022440FCE0007C70C /* Assets.xcassets */; };
 		2F84620422440FCE0007C70C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F84620222440FCE0007C70C /* LaunchScreen.storyboard */; };
 		2F84620F22440FCE0007C70C /* iEatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F84620E22440FCE0007C70C /* iEatsTests.swift */; };
+		2FCDA38C2257981400BCCA98 /* PurchaseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCDA38B2257981400BCCA98 /* PurchaseDetailsViewController.swift */; };
 		2FE247FC224414560005090A /* FoodDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE247FB224414560005090A /* FoodDetailsViewController.swift */; };
 		2FECE7D1224A75CE0061C638 /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FECE7D0224A75CE0061C638 /* FoodTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +41,7 @@
 		2F84620A22440FCE0007C70C /* iEatsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iEatsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F84620E22440FCE0007C70C /* iEatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iEatsTests.swift; sourceTree = "<group>"; };
 		2F84621022440FCE0007C70C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2FCDA38B2257981400BCCA98 /* PurchaseDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailsViewController.swift; sourceTree = "<group>"; };
 		2FE247FB224414560005090A /* FoodDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsViewController.swift; sourceTree = "<group>"; };
 		2FECE7D0224A75CE0061C638 /* FoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,9 +95,10 @@
 			children = (
 				2F3A601B224AA65700EB03E1 /* Models */,
 				2FECE7D2224A75E50061C638 /* MenuView */,
+				2FCDA3892257971D00BCCA98 /* FoodDetails */,
+				2FCDA38A225797C900BCCA98 /* PurchaseDetails */,
 				2F8461F922440FCC0007C70C /* AppDelegate.swift */,
 				2F8461FD22440FCC0007C70C /* Main.storyboard */,
-				2FE247FB224414560005090A /* FoodDetailsViewController.swift */,
 				2F84620022440FCE0007C70C /* Assets.xcassets */,
 				2F84620222440FCE0007C70C /* LaunchScreen.storyboard */,
 				2F84620522440FCE0007C70C /* Info.plist */,
@@ -110,6 +113,22 @@
 				2F84621022440FCE0007C70C /* Info.plist */,
 			);
 			path = iEatsTests;
+			sourceTree = "<group>";
+		};
+		2FCDA3892257971D00BCCA98 /* FoodDetails */ = {
+			isa = PBXGroup;
+			children = (
+				2FE247FB224414560005090A /* FoodDetailsViewController.swift */,
+			);
+			path = FoodDetails;
+			sourceTree = "<group>";
+		};
+		2FCDA38A225797C900BCCA98 /* PurchaseDetails */ = {
+			isa = PBXGroup;
+			children = (
+				2FCDA38B2257981400BCCA98 /* PurchaseDetailsViewController.swift */,
+			);
+			path = PurchaseDetails;
 			sourceTree = "<group>";
 		};
 		2FECE7D2224A75E50061C638 /* MenuView */ = {
@@ -234,6 +253,7 @@
 				2FECE7D1224A75CE0061C638 /* FoodTableViewCell.swift in Sources */,
 				2F3A601A224AA63800EB03E1 /* FoodModel.swift in Sources */,
 				2F8461FA22440FCC0007C70C /* AppDelegate.swift in Sources */,
+				2FCDA38C2257981400BCCA98 /* PurchaseDetailsViewController.swift in Sources */,
 				2FE247FC224414560005090A /* FoodDetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

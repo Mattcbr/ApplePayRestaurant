@@ -110,8 +110,8 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
     // MARK - PKPaymentAuthorizationViewControllerDelegate
     
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
-        //Perform Segue
         controller.dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "purchaseCompletedSegue", sender: controller)
     }
     
     func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didSelect shippingMethod: PKShippingMethod, handler completion: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void) {
@@ -135,5 +135,15 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
     func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
         
         completion(PKPaymentAuthorizationResult.init(status: .success, errors: nil))
+//        controller.dismiss(animated: true, completion: nil)
+//        performSegue(withIdentifier: "purchaseCompletedSegue", sender: controller)
+//        [self .performSegue(withIdentifier: "purchaseCompletedSegue", sender: self)]
     }
+    
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "purchaseCompletedSegue"){
+            let destinationViewController = segue.destination as! PurchaseDetailsViewController
+            
+        }
+    }*/
 }
