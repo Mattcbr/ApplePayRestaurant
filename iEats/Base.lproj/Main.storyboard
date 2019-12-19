@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rvs-FM-iZO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rvs-FM-iZO">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -177,11 +177,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XSU-hi-bQt">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XSU-hi-bQt">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Title" id="F4P-8a-IOk">
+                                    <navigationItem title="Purchase Details" id="F4P-8a-IOk">
                                         <barButtonItem key="rightBarButtonItem" title="Ok" id="Dqb-ad-oWQ">
                                             <connections>
                                                 <action selector="didPressOkButton:" destination="fk4-JZ-z1q" id="1NI-Jy-9Jf"/>
@@ -202,16 +201,29 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="s52-I2-f97">
+                                <rect key="frame" x="16" y="114.5" width="343" height="194"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="s52-I2-f97" secondAttribute="height" multiplier="69:39" id="pHB-RX-qeq"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="s52-I2-f97" firstAttribute="bottom" secondItem="dXd-dI-Kn9" secondAttribute="top" constant="-16" id="04s-sU-tzz"/>
                             <constraint firstItem="kFk-O2-6eK" firstAttribute="firstBaseline" secondItem="dXd-dI-Kn9" secondAttribute="baseline" constant="24" symbolType="layoutAnchor" id="0de-uM-RmV"/>
                             <constraint firstItem="kFk-O2-6eK" firstAttribute="leading" secondItem="POc-BS-Egt" secondAttribute="leading" constant="8" id="1Gz-IB-Sr7"/>
+                            <constraint firstItem="XSU-hi-bQt" firstAttribute="centerX" secondItem="POc-BS-Egt" secondAttribute="centerX" id="9z6-0F-CpI"/>
                             <constraint firstItem="dXd-dI-Kn9" firstAttribute="centerY" secondItem="POc-BS-Egt" secondAttribute="centerY" id="A4c-FP-A8o"/>
+                            <constraint firstItem="s52-I2-f97" firstAttribute="centerX" secondItem="POc-BS-Egt" secondAttribute="centerX" id="JEM-xk-27B"/>
                             <constraint firstItem="POc-BS-Egt" firstAttribute="trailing" secondItem="kFk-O2-6eK" secondAttribute="trailing" constant="8" id="M94-Yq-gTE"/>
                             <constraint firstItem="dXd-dI-Kn9" firstAttribute="width" secondItem="phU-lc-6dx" secondAttribute="width" multiplier="0.8" id="V7c-LY-EMq"/>
                             <constraint firstItem="dXd-dI-Kn9" firstAttribute="centerX" secondItem="POc-BS-Egt" secondAttribute="centerX" id="Yci-KC-Nd6"/>
+                            <constraint firstItem="XSU-hi-bQt" firstAttribute="leading" secondItem="phU-lc-6dx" secondAttribute="leading" id="a5A-Pr-Dfx"/>
+                            <constraint firstItem="POc-BS-Egt" firstAttribute="leading" secondItem="s52-I2-f97" secondAttribute="leading" constant="-16" id="gFP-NC-z0x"/>
                             <constraint firstItem="kFk-O2-6eK" firstAttribute="centerX" secondItem="POc-BS-Egt" secondAttribute="centerX" id="iEW-lh-gh2"/>
+                            <constraint firstItem="s52-I2-f97" firstAttribute="trailing" secondItem="POc-BS-Egt" secondAttribute="trailing" constant="-16" id="n9c-7C-E9P"/>
+                            <constraint firstItem="POc-BS-Egt" firstAttribute="top" secondItem="XSU-hi-bQt" secondAttribute="bottom" constant="-44" id="xI6-p4-rG5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="POc-BS-Egt"/>
                     </view>
@@ -225,4 +237,7 @@
             <point key="canvasLocation" x="1300" y="-13"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo" width="690" height="388"/>
+    </resources>
 </document>

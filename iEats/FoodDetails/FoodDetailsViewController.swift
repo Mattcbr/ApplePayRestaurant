@@ -20,6 +20,8 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
     let request = PKPaymentRequest()
     var summaryItens = [PKPaymentSummaryItem]()
     var shippingMethodss = [PKShippingMethod]()
+    var purchaseCompleted: Bool = false
+    var purchaseData = PKPayment()
     var shippingPrice: NSDecimalNumber?{
         didSet{
             updateSummary()
@@ -31,6 +33,10 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
         addApplePayButton()
         
         self.navigationItem.title = selectedFood?.name
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        purchaseCompleted = false
     }
     
     func setupForFood(){
@@ -111,7 +117,9 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
     
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
         controller.dismiss(animated: true, completion: nil)
-        performSegue(withIdentifier: "purchaseCompletedSegue", sender: controller)
+        if(purchaseCompleted){
+            performSegue(withIdentifier: "purchaseCompletedSegue", sender: controller)
+        }
     }
     
     func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didSelect shippingMethod: PKShippingMethod, handler completion: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void) {
@@ -127,7 +135,7 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
         if(zip?.first != "9"){
             print("Error")
             zipError.status = .failure
-            zipError.errors.append(PKPaymentRequest.paymentShippingAddressInvalidError(withKey: "donotdeliver", localizedDescription: "Sorry, we do not deliver that far :("))
+            zipError.errors.append(PKPaymentRequest.paymentShippingAddressInvalidError(withKey: "donotdeliver", localizedDescription: "Hey, Cocoaheads!"))
         }
         completion(zipError)
     }
@@ -135,15 +143,17 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
     func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
         
         completion(PKPaymentAuthorizationResult.init(status: .success, errors: nil))
-//        controller.dismiss(animated: true, completion: nil)
-//        performSegue(withIdentifier: "purchaseCompletedSegue", sender: controller)
-//        [self .performSegue(withIdentifier: "purchaseCompletedSegue", sender: self)]
+        purchaseCompleted = true
+        purchaseData = payment
     }
     
-    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "purchaseCompletedSegue"){
             let destinationViewController = segue.destination as! PurchaseDetailsViewController
             
+            destinationViewController.costumerName = purchaseData.shippingContact?.name?.givenName
+            destinationViewController.shippingId = purchaseData.shippingMethod?.identifier
+            destinationViewController.foodName = self.selectedFood?.name
         }
-    }*/
+    }
 }
