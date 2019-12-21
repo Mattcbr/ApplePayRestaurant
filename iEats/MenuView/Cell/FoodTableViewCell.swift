@@ -23,7 +23,7 @@ class FoodTableViewCell: UITableViewCell {
     func setupForFood(foodToSetup: FoodModel){
         foodNameLabel.text = foodToSetup.name
         foodDescriptionLabel.text = foodToSetup.detailedDescription
-        foodPriceLabel.text = String(format: "R$ %.2f", foodToSetup.price )
+        foodPriceLabel.text = String(format: "€ %.2f", foodToSetup.price )
         
         var imageToSetup = UIImage(named: "logo")
         switch foodToSetup.imageID {

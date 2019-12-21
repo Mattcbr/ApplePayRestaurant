@@ -41,7 +41,7 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
     
     func setupForFood(){
         foodNameLabel.text = selectedFood?.name
-        foodPriceLabel.text = String(format: "R$ %.2f", selectedFood?.price ?? 10000.00)
+        foodPriceLabel.text = String(format: "€ %.2f", selectedFood?.price ?? 10000.00)
         foodDescriptionLabel.text = selectedFood?.detailedDescription
         
         var imageToSetup = UIImage(named: "logo")
@@ -63,7 +63,10 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
     }
     
     func addApplePayButton(){
-        let applePayButton = PKPaymentButton(paymentButtonType: .buy, paymentButtonStyle: .black)
+        var applePayButton = PKPaymentButton(paymentButtonType: .buy, paymentButtonStyle: .black)
+        if traitCollection.userInterfaceStyle == .dark {
+            applePayButton = PKPaymentButton(paymentButtonType: .buy, paymentButtonStyle: .white)
+        }
         applePayButton.translatesAutoresizingMaskIntoConstraints = false
         applePayButton.addTarget(self, action: #selector(applePayButtonTapped(sender:)), for: .touchUpInside)
         view.addSubview(applePayButton)
@@ -79,8 +82,8 @@ class FoodDetailsViewController: UIViewController, PKPaymentAuthorizationViewCon
         request.merchantIdentifier = "merchant.com.shiningdevelopers"
         request.supportedNetworks = SupportedPaymentNetworks
         request.merchantCapabilities = PKMerchantCapability.capability3DS
-        request.countryCode = "BR"
-        request.currencyCode = "BRL"
+        request.countryCode = "PT"
+        request.currencyCode = "EUR"
         request.requiredShippingContactFields = [.name, .postalAddress]
         
         let delivery = PKShippingMethod(label: "Delivery", amount: NSDecimalNumber(integerLiteral: 5), type: .final)
